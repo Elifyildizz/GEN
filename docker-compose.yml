@@ -1,0 +1,60 @@
+version: '3.1'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: gen
+      MYSQL_USER: gen
+      MYSQL_PASSWORD: n!G4l1WjOoIL8HC4
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-dockerize/init_db.py:/docker-entrypoint-initdb.d/init_db.py
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: rootpassword
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./services/Dockerfile
+    container_name: backend-container
+    restart: always
+    depends_on:
+      - mysql
+    volumes:
+      - ./services:/app/services
+      - ./main.py:/app/main.py
+    ports:
+      - "8000:8000"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB: gen
+      MYSQL_USER: gen
+      MYSQL_PASSWORD: n!G4l1WjOoIL8HC4
+
+#  frontend:
+#    build:
+#      context: .
+#      dockerfile: ./frontend/Dockerfile
+#    container_name: frontend-container
+#    restart: always
+#    ports:
+#      - "3000:80"
+
+volumes:
+  mysql-data:
