@@ -3,6 +3,7 @@ from sqlalchemy import Column, Integer, String, Text, TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column
 from users.database import Base
 from datetime import datetime, timezone
+from typing import Optional
 
 class User(Base):
     __tablename__ = 'users'
@@ -29,14 +30,14 @@ class UserResponse(BaseModel):
         from_attributes = True
 
 class UserRequest(BaseModel):
-    id: int
-    username: str
-    password: str
-    email: str
-    updated_date: datetime
-    created_date: datetime
-    status: int
-    auth: int
+    id: Optional[int] = None
+    username: Optional[str] = None
+    password: Optional[str] = None
+    email: Optional[str] = None
+    updated_date: Optional[datetime] = None
+    created_date: Optional[datetime] = None
+    status: Optional[int] = None
+    auth: Optional[int] = None
 
     class Config:
         from_attributes = True

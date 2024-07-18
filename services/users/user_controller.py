@@ -1,5 +1,7 @@
 from users.database import db, Base
 from users.user_model import User,UserResponse,UserRequest
+from hashlib import sha256
+
 class user_controller:
     @staticmethod
     def getAllUsers():
@@ -14,6 +16,23 @@ class user_controller:
 
         return users
     
+    @staticmethod
+    def login(email: str, password: str):
+        session = db.get_session()
+        res = False
+        try:
+            query = session.query(User).filter(User.email==email, User.password==sha256(password.encode('utf-8')).hexdigest())
+            result = query.first()
+            if result:
+                res = True
+            
+        except Exception as e:
+            session.rollback()
+            print(f"Veritabanı işlemi hatası: {e}")
+        finally:
+            session.close()
+        return res
+
     @staticmethod
     def addUser(user : UserRequest):
         session = db.get_session()
