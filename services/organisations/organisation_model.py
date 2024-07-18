@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, Text, TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column
-from organisations.database import Base
+from services.organisations.database import Base
 from datetime import datetime, timezone
 from typing import Optional
 

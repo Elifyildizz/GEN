@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, Text, TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column
-from scans.database import Base
+from services.scans.database import Base
 from datetime import datetime
 
 class Scan(Base):

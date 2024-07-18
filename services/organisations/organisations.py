@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from pydantic import BaseModel
 from sqlalchemy import create_engine
-from organisations.organisation_model import Organisation, OrganisationResponse,OrganisationRequest
-from organisations.organisation_controller import organisation_controller
+from services.organisations.organisation_model import Organisation, OrganisationResponse,OrganisationRequest
+from services.organisations.organisation_controller import organisation_controller
 
 router = APIRouter()
 

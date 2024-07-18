@@ -1,5 +1,5 @@
-from scans.database import db, Base
-from scans.scan_model import Scan,ScanResponse,ScanRequest
+from services.scans.database import db, Base
+from services.scans.scan_model import Scan,ScanResponse,ScanRequest
 class scan_controller:
     @staticmethod
     def getAllScans():

@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from pydantic import BaseModel
 from sqlalchemy import create_engine
-from scans.scan_model import Scan, ScanResponse,ScanRequest
-from scans.scan_controller import scan_controller
+from services.scans.scan_model import Scan, ScanResponse,ScanRequest
+from services.scans.scan_controller import scan_controller
 
 router = APIRouter()
     

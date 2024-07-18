@@ -1,5 +1,5 @@
-from organisations.database import db, Base
-from organisations.organisation_model import Organisation,OrganisationResponse,OrganisationRequest
+from services.organisations.database import db, Base
+from services.organisations.organisation_model import Organisation,OrganisationResponse,OrganisationRequest
 class organisation_controller:
 
     @staticmethod

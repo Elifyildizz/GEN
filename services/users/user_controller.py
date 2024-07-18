@@ -1,5 +1,5 @@
-from users.database import db, Base
-from users.user_model import User,UserResponse,UserRequest
+from services.users.database import db, Base
+from services.users.user_model import User,UserResponse,UserRequest
 from hashlib import sha256
 
 class user_controller:

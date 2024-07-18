@@ -1,12 +1,10 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from flask import jsonify
 from pydantic import BaseModel
 from sqlalchemy import create_engine
-from users.user_model import User, UserResponse,UserRequest
-from users.user_controller import user_controller
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-
+from services.users.user_model import User, UserResponse,UserRequest
+from services.users.user_controller import user_controller
+import json
 
 router = APIRouter()
     
@@ -27,7 +25,6 @@ def login(user: UserRequest):
     return status
 
 @router.get("/getdata", response_model=str)
-@login_required
 def getdata():
     # Bu servise sadece login olan kullanıcılar erişebilir
     return "test"

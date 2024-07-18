@@ -37,7 +37,7 @@ services:
       - mysql
     volumes:
       - ./services:/app/services
-      - ./main.py:/app/main.py
+      - ./services/main.py:/app/main.py
     ports:
       - "8000:8000"
     environment:

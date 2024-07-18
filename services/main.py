@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from users.users import router as users_router
-from scans.scans import router as scans_router
-from organisations.organisations import router as organisations_router
+from services.users.users import router as users_router
+from services.scans.scans import router as scans_router
+from services.organisations.organisations import router as organisations_router
 
 app = FastAPI()
 
