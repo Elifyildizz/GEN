@@ -32,8 +32,8 @@ class Database:
 # Veritabanı bağlantı bilgilerini girin
 user = "gen"
 password = "n!G4l1WjOoIL8HC4"
-host = "127.0.0.1"
-port = "3307"
+host = "mysql"
+port = "3306"
 database = "gen"
 
 # Database sınıfını kullanarak bir nesne oluşturun ve bağlanın

@@ -32,8 +32,8 @@ class Database:
 # Docker-compose dosyanızdaki MySQL servisinin ağ içindeki IP adresi ve portu
 user = "gen"
 password = "n!G4l1WjOoIL8HC4"
-host = "127.0.0.1"  # Docker ağında MySQL konteynerinin ismi
-port = "3307"  # MySQL portu, 3307:3306 olarak expose edilmiş
+host = "mysql"  # Docker ağında MySQL konteynerinin ismi
+port = "3306"  # MySQL portu, 3307:3306 olarak expose edilmiş
 database = "gen"
 
 # Database sınıfını kullanarak bir nesne oluşturun ve bağlanın
