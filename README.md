@@ -1,0 +1,1 @@
+GEN projesini siber güvenlik stajımız süresince geliştirdik. Proje zafiyet taraması yapabilen bir web uygulamadır. Projede kullanılan teknolojiler: Bbot, Nmap, Nuclei, Kubernetes, Rabbitmq, Redis, Django. **Projenin geliştirilmesi eğitim amaçlıdır.**
