@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from pydantic import BaseModel
 from sqlalchemy import create_engine
-from services.scans.scan_model import Scan, ScanResponse,ScanRequest
+from services.scans.scan_model import Scan, ScanResponse,ScanRequest, SubfinderRequest
 from services.scans.scan_controller import scan_controller
 
 router = APIRouter()
@@ -30,3 +30,19 @@ def deleteScan(org_id: int):
     if not success:
         raise HTTPException(status_code=404, detail="Scan not found")
     return {"message": "Scan deleted successfully"}
+
+@router.get("/getScanById/{org_id}", response_model=ScanResponse)
+def getScanById(org_id: int):
+    scan = scan_controller.getScanById(org_id)
+    if not scan:
+        raise HTTPException(status_code=404, detail="Scan not found")
+    return scan
+
+class SubfinderResponse(BaseModel):
+    result: str
+
+@router.post("/subfinder", response_model=SubfinderResponse)
+def run_subfinder(request: SubfinderRequest):
+    print(f"Received Subfinder request: {request}")
+    result = scan_controller.handle_subfinder_request(request)
+    return SubfinderResponse(result=result)

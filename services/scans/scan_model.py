@@ -41,3 +41,10 @@ class ScanRequest(BaseModel):
 
     class Config:
         orm_mode = True
+
+class SubfinderRequest(BaseModel):
+    ip: str
+    token: str
+
+    class Config:
+        orm_mode = True
