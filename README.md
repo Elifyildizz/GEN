@@ -24,11 +24,6 @@ Bu projeyi kullanarak, aşağıdaki şartları kabul etmiş olursunuz:
   
 **Bu projeyi indirerek, kurarak veya kullanarak, _bu şartları okuduğunuzu, anladığınızı ve kabul ettiğinizi onaylamış olursunuz._**
 
-## Katkıda Bulunanlar
-
-- [Göktuğ Muslu](https://github.com/goktug2jz)
-- [Nevin Nur Sarıkaya](https://github.com/nvnsrky)
-- [Elif Yıldız](https://github.com/Elifyildizz)
 
   
 # GEN Project
@@ -56,7 +51,7 @@ By using this project, you agree to the following terms:
   
 **By downloading, installing, or using this project, _you acknowledge that you have read, understood, and agree to be bound by these terms._**
 
-## Contributors
+## Katkıda Bulunanlar - Contributors
 
 - [Göktuğ Muslu](https://github.com/goktug2jz)
 - [Nevin Nur Sarıkaya](https://github.com/nvnsrky)
