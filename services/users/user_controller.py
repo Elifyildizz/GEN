@@ -1,5 +1,6 @@
+import secrets
 from services.users.database import db, Base
-from services.users.user_model import User,UserResponse,UserRequest
+from services.users.user_model import Token, User,UserResponse,UserRequest
 from hashlib import sha256
 
 class user_controller:
@@ -19,16 +20,27 @@ class user_controller:
     @staticmethod
     def login(email: str, password: str):
         session = db.get_session()
-        res = False
+        res = {"status":"error"}
         try:
             query = session.query(User).filter(User.email==email, User.password==sha256(password.encode('utf-8')).hexdigest())
             result = query.first()
             if result:
-                res = True
-            
+                token = secrets.token_hex(30)
+                print(token)
+                new_token = Token(
+                    token=token,
+                    user_id=result.id,
+                    expired=False
+                )
+                session.add(new_token)
+                session.commit()
+                res = {"status":"success","token":token}
+            else:
+                res = {"status":"user_not_found"}
         except Exception as e:
             session.rollback()
             print(f"Veritabanı işlemi hatası: {e}")
+            res = {"status":"error"}
         finally:
             session.close()
         return res

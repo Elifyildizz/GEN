@@ -1,12 +1,23 @@
+import json
 from fastapi import APIRouter, HTTPException
 from typing import List
-from pydantic import BaseModel
 from sqlalchemy import create_engine
-from services.users.user_model import User, UserResponse,UserRequest
+from services.users.user_model import TokenRequest, User, UserResponse,UserRequest
 from services.users.user_controller import user_controller
-import json
 
 router = APIRouter()
+    
+@router.post("/login")
+def login(user: UserRequest):
+    result = user_controller.login(email=user.email,password=user.password)
+    return result
+
+@router.post("/logout")
+def login(token: TokenRequest):
+    result = user_controller.logout(token=token.token)
+    return result
+
+### buradan sonrası kontrol edilmedi henüz
     
 @router.get("/getAllUsers", response_model=List[UserResponse])
 def getAllUsers():
@@ -17,12 +28,6 @@ def getAllUsers():
 def getAllUsers(user: UserRequest):
     user = user_controller.addUser(user.dict())
     return user
-
-@router.post("/login", response_model=bool)
-def login(user: UserRequest):
-    print(user.email)
-    status = user_controller.login(email=user.email,password=user.password)
-    return status
 
 @router.get("/getdata", response_model=str)
 def getdata():

@@ -1,21 +1,27 @@
 from fastapi import APIRouter, HTTPException
-from typing import List
-from pydantic import BaseModel
-from sqlalchemy import create_engine
-from services.organisations.organisation_model import Organisation, OrganisationResponse,OrganisationRequest
+from services.organisations.organisation_model import  OrganisationResponse, OrganisationWithTokenRequest, TokenRequest
 from services.organisations.organisation_controller import organisation_controller
 
 router = APIRouter()
 
-@router.get("/getAllOrganisations", response_model=List[OrganisationResponse])
-def getAllOrganisations():
-    organisations = organisation_controller.getAllOrganisations()
+@router.post("/getAllOrganisations")
+def getAllOrganisations(token: TokenRequest):
+    organisations = organisation_controller.getAllOrganisations(token=token.token)
     return organisations
 
-@router.post("/addOrganisation", response_model=OrganisationResponse)
-def getAllOrganisations(organisation: OrganisationRequest):
-    organisation = organisation_controller.addOrganisation(organisation.dict())
+@router.post("/addOrganisation")
+def getAllOrganisations(organisation: OrganisationWithTokenRequest):
+    new_organisation = {
+        "organisation":organisation.organisation,
+        "phone":organisation.phone,
+        "email":organisation.email
+    }
+    organisation = organisation_controller.addOrganisation(organisation=new_organisation,token=organisation.token)
     return organisation
+
+### buradan sonrası kontrol edilmedi henüz
+
+
 
 @router.get("/getOrganisationById/{org_id}", response_model=OrganisationResponse)
 def getOrganisationById(org_id:int):
