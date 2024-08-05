@@ -1,1 +1,5 @@
 venv/
+services/organisations/__pycache__/database.cpython-310.pyc
+services/organisations/__pycache__/database.cpython-310.pyc
+services/organisations/__pycache__/organisation_controller.cpython-310.pyc
+services/organisations/__pycache__/organisation_model.cpython-310.pyc

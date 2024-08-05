@@ -48,3 +48,10 @@ class SubfinderRequest(BaseModel):
 
     class Config:
         orm_mode = True
+
+class TokenRequest(BaseModel):
+    token: str
+
+class CollectionRequest(BaseModel):
+    token: str
+    collection_name: str

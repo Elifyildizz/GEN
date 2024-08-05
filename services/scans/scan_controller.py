@@ -1,7 +1,8 @@
 import paramiko
 from services.scans.database import db, Base
-from services.scans.scan_model import Scan,ScanResponse,ScanRequest, SubfinderRequest, Scan
+from services.scans.scan_model import Scan,ScanResponse,ScanRequest, SubfinderRequest, Scan,CollectionRequest
 from fastapi import HTTPException
+from services.scans.mongodb_connection import mongodb_connection
 
 class scan_controller:
     @staticmethod
@@ -98,8 +99,50 @@ class scan_controller:
             session.close()
         return scan
 
+
+
+ ########################################################### mongodb
     @staticmethod
-    def execute_ifconfig(hostname: str, username: str, password: str) -> str:
+    def getCollections():
+        scan = None
+        try:
+            scan = mongodb_connection.querry(search_querry={},table_name="scan_collections")
+        except Exception as e:
+            print(f"Veritabanı işlemi hatası: {e}")
+        finally:
+            print("finally")
+        
+        return scan
+    
+    @staticmethod
+    def getCollectionsNucleiScan(collection_request: CollectionRequest):
+        collection_request.collection_name
+        scan = None
+        try:
+            scan = mongodb_connection.querry(search_querry={"collection_name":collection_request.collection_name},table_name="nuclei_scans")
+        except Exception as e:
+            print(f"Veritabanı işlemi hatası: {e}")
+        finally:
+            print("finally")
+        
+        return scan
+
+
+ ###########################################################
+
+
+    @staticmethod
+    def nmap_scan(ip: str) -> str:
+        querry = f"nmap -sV -p- --open {ip} -vvv -oX test.xml"
+        result = scan_controller.execute_ssh(querry)
+        return result
+
+    @staticmethod
+    def execute_ssh(querry: str) -> str:
+        hostname = '192.168.85.129'
+        username = 'kali'
+        password = 'kali'
+
         try:
             print(f"Connecting to {hostname} with username {username}")
 
@@ -112,9 +155,9 @@ class scan_controller:
             print(f"Connected to {hostname}")
 
             # ifconfig komutunu çalıştır
-            stdin, stdout, stderr = client.exec_command('subfinder -d 104.18.5.159 -oJ -oD scan_results')
+            stdin, stdout, stderr = client.exec_command(querry)
             ifconfig_output = stdout.read().decode()
-            print("ifconfig output:", ifconfig_output)
+            print("output:", ifconfig_output)
 
             # Hataları kontrol et
             errors = stderr.read().decode()
@@ -131,15 +174,3 @@ class scan_controller:
         except Exception as e:
             print(f"An error occurred: {e}")
             raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
-
-    @staticmethod
-    def handle_subfinder_request(request: SubfinderRequest) -> str:
-        # Kali Linux VM bilgileri
-        hostname = '192.168.85.129'
-        username = 'kali'  # Kali VM'deki kullanıcı adı
-        password = 'kali'  # Kali VM'deki kullanıcı şifresi
-
-        # ifconfig komutunu çalıştır
-        print(f"Handling subfinder request for IP: {hostname}")
-        result = scan_controller.execute_ifconfig(hostname, username, password)
-        return result

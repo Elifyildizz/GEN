@@ -1,12 +1,42 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from typing import List
 from pydantic import BaseModel
-from sqlalchemy import create_engine
-from services.scans.scan_model import Scan, ScanResponse,ScanRequest, SubfinderRequest
+from sqlalchemy import JSON, create_engine
+from services.scans.scan_model import Scan, ScanResponse,ScanRequest, SubfinderRequest, TokenRequest,CollectionRequest
 from services.scans.scan_controller import scan_controller
+from bson import json_util, ObjectId
+import json
 
 router = APIRouter()
+
+@router.post("/getScanCollections")
+def getScanCollections(token_request:TokenRequest):
+    print(token_request.token)
+    scans = scan_controller.getCollections()
+    ab = []
+    for x in scans:
+        print(x)
+        ab.append(x)
+
     
+    return {"data":json.loads(json_util.dumps(ab))}
+
+@router.post("/getCollectionsNucleiScan")
+def getCollectionsNucleiScan(collection_request:CollectionRequest):
+    print(collection_request.token)
+    scans = scan_controller.getCollectionsNucleiScan(collection_request)
+    ab = []
+    for x in scans:
+        print(x)
+        ab.append(x)
+
+    
+    return {"data":json.loads(json_util.dumps(ab))}
+
+###
+
 @router.get("/getAllScans", response_model=List[ScanResponse])
 def getAllScans():
     scans = scan_controller.getAllScans()
